@@ -1,0 +1,12 @@
+# Bug in RedHat 6.5, fix will be shipped with 6.6
+# Ref: https://bugzilla.redhat.com/show_bug.cgi?id=1032691
+policy_module(my-zabbix-agent, 0.0.1)
+
+require{
+  type zabbix_agent_t;
+}
+
+kernel_read_network_state(zabbix_agent_t)
+domain_read_all_domains_state(zabbix_agent_t)
+dev_read_sysfs(zabbix_agent_t)
+corenet_tcp_connect_all_ports(zabbix_agent_t)

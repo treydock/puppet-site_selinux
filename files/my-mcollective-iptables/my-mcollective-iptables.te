@@ -1,0 +1,12 @@
+# REF: https://groups.google.com/d/msg/mcollective-users/4ZZh0SGTUNo/UIeNaTmaYOsJ
+module my-mcollective-iptables 0.0.1;
+
+require {
+	type iptables_t;
+	type openshift_initrc_tmp_t;
+	class file { read write };
+}
+
+#============= iptables_t ==============
+allow iptables_t openshift_initrc_tmp_t:file { read write };
+
