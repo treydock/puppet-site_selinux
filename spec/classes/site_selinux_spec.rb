@@ -41,4 +41,12 @@ describe 'site_selinux' do
     it { should_not contain_selinux__module('my-zabbix-agent') }
   end
 
+  context "when manage_modules => 'false'" do
+    let(:params) {{ :manage_modules => 'false' }}
+
+    it { should have_selinux__module_resource_count(0) }
+    it { should_not contain_selinux__module('my-mcollective-iptables') }
+    it { should_not contain_selinux__module('my-zabbix-agent') }
+  end
+
 end

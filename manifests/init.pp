@@ -8,9 +8,13 @@ class site_selinux (
 ) {
 
   validate_re($ensure, ['^present$', '^absent$'])
-  validate_bool($manage_modules)
 
-  if $manage_modules {
+  $manage_modules_real = is_string($manage_modules) ? {
+    true    => str2bool($manage_modules),
+    default => $manage_modules,
+  }
+
+  if $manage_modules_real {
     selinux::module { 'my-mcollective-iptables':
       ensure  => $ensure,
       source  => 'puppet:///modules/site_selinux/my-mcollective-iptables',
