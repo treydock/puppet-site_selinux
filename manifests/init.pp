@@ -4,14 +4,23 @@
 #
 class site_selinux (
   $ensure = 'present',
-  $manage_modules = true,
+  $manage_modules = 'UNSET',
 ) {
 
   validate_re($ensure, ['^present$', '^absent$'])
 
-  $manage_modules_real = is_string($manage_modules) ? {
-    true    => str2bool($manage_modules),
-    default => $manage_modules,
+  if $manage_modules == 'UNSET' {
+    $manage_modules_real = getvar('selinux::mode') ? {
+      'enfocing'    => true,
+      'permissive'  => true,
+      'disabled'    => false,
+      default       => true,
+    }
+  } else {
+    $manage_modules_real  = is_string($manage_modules) ? {
+      true    => str2bool($manage_modules),
+      default => $manage_modules,
+    }
   }
 
   if $manage_modules_real {
