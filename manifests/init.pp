@@ -29,9 +29,12 @@ class site_selinux (
       source  => 'puppet:///modules/site_selinux/my-mcollective-iptables',
     }
 
-    selinux::module { 'my-zabbix-agent':
-      ensure  => $ensure,
-      source  => 'puppet:///modules/site_selinux/my-zabbix',
+    # TODO : Temporary until figure out why this module fails on EL7
+    if $::operatingsystemmajrelease < '7' {
+      selinux::module { 'my-zabbix-agent':
+        ensure  => $ensure,
+        source  => 'puppet:///modules/site_selinux/my-zabbix',
+      }
     }
   }
 
