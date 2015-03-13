@@ -30,12 +30,12 @@ class site_selinux (
     }
 
     # TODO : Temporary until figure out why this module fails on EL7
-    if $::operatingsystemmajrelease < '7' {
+    #if $::operatingsystemmajrelease < '7' {
       selinux::module { 'my-zabbix-agent':
         ensure  => $ensure,
         source  => 'puppet:///modules/site_selinux/my-zabbix',
       }
-    }
+    #}
   }
 
 }
